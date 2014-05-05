@@ -1,5 +1,5 @@
 <ModuleDefinition
-	ModuleId="2d3d"
+	ModuleId="iso"
 	VersionId="1"
 	Description="A test isometric 3D engine."
 	Dependencies="AppCore"

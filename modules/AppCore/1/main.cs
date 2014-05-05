@@ -29,7 +29,7 @@ function AppCore::create( %this )
     exec("./scripts/openal.cs");
     
     // Initialize the canvas
-    initializeCanvas("krawl");
+    initializeCanvas("iso");
     
     // Set the canvas color
     Canvas.BackgroundColor = "White";
@@ -39,7 +39,7 @@ function AppCore::create( %this )
     initializeOpenAL();
     
     ModuleDatabase.loadGroup("gameBase");
-	ModuleDatabase.loadExplicit("krawl");
+	ModuleDatabase.loadExplicit("iso");
 }
 
 //-----------------------------------------------------------------------------
@@ -48,4 +48,3 @@ function AppCore::destroy( %this )
 {
 
 }
-

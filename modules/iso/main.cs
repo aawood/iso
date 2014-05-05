@@ -1,4 +1,4 @@
-function 2d3d::create( %this )
+function iso::create( %this )
 {
     new Scene(mainScene);
     new SceneWindow(mainWindow);
@@ -14,7 +14,7 @@ function 2d3d::create( %this )
 
 //-----------------------------------------------------------------------------
 
-function 2d3d::destroy( %this )
+function iso::destroy( %this )
 {
 }
 

@@ -58,7 +58,6 @@ ModuleDatabase.scanModules( "modules" );
 
 // Load AppCore module.
 ModuleDatabase.LoadExplicit( "AppCore" );
-ModuleDatabase.LoadExplicit( "2d3d" );
 
 //-----------------------------------------------------------------------------
 
@@ -66,5 +65,4 @@ function onExit()
 {
     // Unload the AppCore module.
     ModuleDatabase.unloadExplicit( "AppCore" );
-    ModuleDatabase.unloadExplicit( "2d3d" );
 }
