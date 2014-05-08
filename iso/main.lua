@@ -43,7 +43,7 @@ function love.update(dt)
 end
 
 function loadTileset()
-	tileset = love.graphics.newImage('8x8tile.png')
+	tileset = love.graphics.newImage('template.png')
 	
 	tileW, tileH = 32, 32
 	tilesetW, tilesetH = tileset:getWidth(), tileset:getHeight()
@@ -122,7 +122,7 @@ function drawMap()
 				local y = object[3] * tileH
 				local z = object[4] * tileH
 				local drawX = cenX + (x/2) - (y/2)
-				local drawY = cenY - (x/2) - (y/2) + z
+				local drawY = (cenY - (x/2) - (y/2) + z) / 2
 				love.graphics.draw(tileset, quads[tileID], drawX, drawY)
 --				love.graphics.draw(tileset, quads[tileID], x, y)
 			end
