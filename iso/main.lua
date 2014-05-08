@@ -5,7 +5,7 @@ function love.load()
 	cenY = screenY/2
 	xLimit = cenX/1.5
 	yLimit = cenY/1.5
-	love.graphics.setMode(screenX, screenY, false, true, 0)
+	love.window.setMode(screenX, screenY, {fullscreen=false, vsync=true, fsaa=0})
 	timeElapsed = 0
 	grav = 0
 
@@ -123,8 +123,8 @@ function drawMap()
 				local z = object[4] * tileH
 				local drawX = cenX + (x/2) - (y/2)
 				local drawY = cenY - (x/2) - (y/2) + z
-				love.graphics.drawq(tileset, quads[tileID], drawX, drawY)
---				love.graphics.drawq(tileset, quads[tileID], x, y)
+				love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+--				love.graphics.draw(tileset, quads[tileID], x, y)
 			end
 		end
 	end
