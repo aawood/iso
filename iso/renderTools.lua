@@ -1,37 +1,62 @@
 renderOrder = {“backWall”, “backdoor”, “floor”, “objects”, “frontWall”, “frontDoor”}
 
-function genZMap()
+function genDepthMaps()
 	zMap = {}
-	for i, object in ipairs(map) do
+	xyMap = {}
+	-- Populate tables with Z and XY values of all objects
+	for i, object in ipairs(objects) do
 		table.insert(zMap, object.curZ)
+		table.insert(xyMap, object.curXY)
 	end
-	local hash = {}
-	local res = {}
+	
+	-- Generate table with unique Z values, then sort, then reverse
+	local zHash = {}
+	local zRes = {}
 	for _, v in ipairs(zMap) do
-		if (not hash[v]) then
-			res[#res+1] = v
-			hash[v] = true
+		if (not zHash[v]) then
+			zRes[#zRes+1] = v
+			zHash[v] = true
 		end
 	end
-	table.sort(res)
-	local size = #res+1
+
+	table.sort(zRes)
+	local size = #zRes+1
 	zMap = {}
-	for i, v in ipairs(res) do
+	for i, v in ipairs(zRes) do
 		zMap[size-i] = v
 	end
+	
+	-- Generate table with unique XY values, then sort, then reverse
+	local xyHash = {}
+	local xyRes = {}
+	for _, v in ipairs(xyMap) do
+		if (not xyHash[v]) then
+			xyRes[#xyRes+1] = v
+			xyHash[v] = true
+		end
+	end
+
+	table.sort(xyRes)
+	local size = #xyRes+1
+	xyMap = {}
+	for i, v in ipairs(xyRes) do
+		xyMap[size-i] = v
+	end	
 end
 
-function drawMap()
-	for i, z in ipairs(zMap) do
-		for index, object in ipairs(map) do
-			if object.curZ == z then
-				local tileID = object.tileID
-				local x = object.curX * tileW
-				local y = object.curY * tileH
-				local z = object.curZ * tileH
-				local drawX = (cenX + (x/2) - (y/2)) + xOffset
-				local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
-				love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+function drawObjects()
+	for zi, z in ipairs(zMap) do
+		for xyi, xy in ipairs (xyMap) do
+			for index, object in ipairs(objects) do
+				if object.curZ == z and object.curXY == xy then
+					local tileID = object.tileID
+					local x = object.curX * tileW
+					local y = object.curY * tileH
+					local z = object.curZ * tileH
+					local drawX = (cenX + (x/2) - (y/2)) + xOffset
+					local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
+					love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+				end
 			end
 		end
 	end
