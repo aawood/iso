@@ -10,12 +10,12 @@ function love.load()
 	yLimit = cenY/1.5
 	xOffset = 0
 	yOffset = 120
---	love.window.setMode(screenX, screenY, {fullscreen=false, vsync=true, fsaa=0})
 	love.window.setMode(screenX, screenY)
 	timeElapsed = 0
 	grav = 0
 	map = {}
 	objects = {}
+	renderOrder = {"backWall", "backDoor", "floor", "object", "frontWall", "frontDoor"}
 
 	loadTileset()
 	genMap()
@@ -29,13 +29,18 @@ function love.draw()
 	genDepthMaps()
 	drawObjects()
 	testThis()
-	love.graphics.print(tostring(timeElapsed), 1, 1)
+--	love.graphics.print(tostring(timeElapsed), 1, 1)
+--	love.graphics.print(tostring(#renderOrder), 1, 11)
+--	debugTiles()
+--	debugType()
 end
 
 function testThis()
 end
 
 function genMap()
+	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
+	buildFlat(0, 0, 16, 16, 8, 3)
 	addObject(0, 0, 0)
 	addObject(16, 0, 0)
 	addObject(0, 16, 0)

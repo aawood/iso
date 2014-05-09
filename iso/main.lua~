@@ -48,4 +48,6 @@ function genMap()
 	addObject(9, 8, 8)
 	addObject(9, 9, 8)
 	addObject(8, 9, 8)
+	addObject(9, 8, 9)
+	addObject(9, 9, 7)
 end

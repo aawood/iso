@@ -1,5 +1,3 @@
-renderOrder = {“backWall”, “backdoor”, “floor”, “objects”, “frontWall”, “frontDoor”}
-
 function genDepthMaps()
 	zMap = {}
 	xyMap = {}
@@ -45,35 +43,34 @@ function genDepthMaps()
 end
 
 function drawObjects()
-	for zi, z in ipairs(zMap) do
-		for xyi, xy in ipairs (xyMap) do
-			for index, object in ipairs(objects) do
-				if object.curZ == z and object.curXY == xy then
-					local tileID = object.tileID
-					local x = object.curX * tileW
-					local y = object.curY * tileH
-					local z = object.curZ * tileH
-					local drawX = (cenX + (x/2) - (y/2)) + xOffset
-					local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
-					love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+	for zIndex, z in ipairs(zMap) do
+		for typeIndex, rType in ipairs(renderOrder) do
+			for xyIndex, xy in ipairs (xyMap) do
+				for objectIndex, object in ipairs(objects) do
+					if object.curZ == z and object.curXY == xy and object.oType == rType then
+						local tileID = object.tileID
+						local x = object.curX * tileW
+						local y = object.curY * tileH
+						local z = object.curZ * tileH
+						local drawX = (cenX + (x/2) - (y/2)) + xOffset
+						local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
+						love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+					end
 				end
 			end
 		end
 	end
 end
 
-function loadTileset()
-	tileset = love.graphics.newImage('assets/template.png')
-	
-	tileW, tileH = 32, 32
-	tilesetW, tilesetH = tileset:getWidth(), tileset:getHeight()
-	
-	quads = {}
-	
-	for ix = 0, tilesetW, tileW do
-		for iy = 0, tilesetH, tileH do
-			local quad = love.graphics.newQuad(ix, iy, tileW, tileH, tilesetW, tilesetH)
-			table.insert(quads, quad)
-		end
+function debugTiles()
+	for i, tile in ipairs(quads) do
+		love.graphics.draw(tileset, quads[i], 32*i, 0)
+		love.graphics.print(tostring(i), (32*i)+16, 38)
+	end
+end
+
+function debugType()
+	for i, rType in ipairs(renderOrder) do
+		love.graphics.print(tostring(i), 0, 10*i)
 	end
 end
