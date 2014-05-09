@@ -15,6 +15,7 @@ function love.load()
 	timeElapsed = 0
 	grav = 0
 	map = {}
+	objects = {}
 
 	loadTileset()
 	genMap()
@@ -25,25 +26,26 @@ function love.update(dt)
 end
 
 function love.draw()
-	genZMap()
-	drawMap()
+	genDepthMaps()
+	drawObjects()
 	testThis()
+	love.graphics.print(tostring(timeElapsed), 1, 1)
 end
 
 function testThis()
 end
 
 function genMap()
-	addObjectToMap(0, 0, 0)
-	addObjectToMap(16, 0, 0)
-	addObjectToMap(0, 16, 0)
-	addObjectToMap(16, 16, 0)
-	addObjectToMap(0, 0, 16)
-	addObjectToMap(16, 0, 16)
-	addObjectToMap(0, 16, 16)
-	addObjectToMap(16, 16, 16)
-	addObjectToMap(8, 8, 8)
-	addObjectToMap(9, 8, 8)
-	addObjectToMap(9, 9, 8)
-	addObjectToMap(8, 9, 8)
+	addObject(0, 0, 0)
+	addObject(16, 0, 0)
+	addObject(0, 16, 0)
+	addObject(16, 16, 0)
+	addObject(0, 0, 16)
+	addObject(16, 0, 16)
+	addObject(0, 16, 16)
+	addObject(16, 16, 16)
+	addObject(8, 8, 8)
+	addObject(9, 8, 8)
+	addObject(9, 9, 8)
+	addObject(8, 9, 8)
 end
