@@ -1,3 +1,5 @@
+renderOrder = {"backWall", "backDoor", "floor", "object"}
+
 function genDepthMaps()
 	zMap = {}
 	xyMap = {}
@@ -54,13 +56,46 @@ function drawObjects()
 						local z = object.curZ * tileH
 						local drawX = (cenX + (x/2) - (y/2)) + xOffset
 						local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
-						love.graphics.draw(tileset, quads[tileID], drawX, drawY)
+						love.graphics.draw(tileset, quads[tileID], drawX-(tileW/2), drawY-(tileH/2))
 					end
 				end
 			end
 		end
 	end
+	
+	for zIndex, z in ipairs(zMap) do
+		for xyIndex, xy in ipairs (xyMap) do
+			for objectIndex, object in ipairs(objects) do
+				if object.curZ == z and object.curXY == xy and object.oType == "frontWall" then
+					local tileID = object.tileID
+					local x = object.curX * tileW
+					local y = object.curY * tileH
+					local z = object.curZ * tileH
+					local drawX = (cenX + (x/2) - (y/2)) + xOffset
+					local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
+					love.graphics.draw(tileset, quads[tileID], drawX-(tileW/2), drawY-(tileH/2))
+				end
+			end
+		end
+	end
+	
+	for zIndex, z in ipairs(zMap) do
+		for xyIndex, xy in ipairs (xyMap) do
+			for objectIndex, object in ipairs(objects) do
+				if object.curZ == z and object.curXY == xy and object.oType == "frontDoor" then
+					local tileID = object.tileID
+					local x = object.curX * tileW
+					local y = object.curY * tileH
+					local z = object.curZ * tileH
+					local drawX = (cenX + (x/2) - (y/2)) + xOffset
+					local drawY = ((cenY - (x/2) - (y/2) + z) / 2) + yOffset
+					love.graphics.draw(tileset, quads[tileID], drawX-(tileW/2), drawY-(tileH/2))
+				end
+			end
+		end
+	end
 end
+
 
 function debugTiles()
 	for i, tile in ipairs(quads) do

@@ -20,7 +20,8 @@ function addObject(x, y, z, tileID, oType, oBehaviour)
 	local z = z or 0
 	local tileID = tileID or 1
 	local oType = oType or "object"
-	local oBehaviour = oBehaviour or {{"all"}}
+	local oBehaviour = oBehaviour or {}
+	local depth = x+ y +(z*0.5)
 	local xy = x + y
 	table.insert(objects, {tileID = tileID, curX = x, curY = y, curZ = z, oType = oType, behaviour = oBehaviour, curXY = xy})
 end
@@ -33,10 +34,16 @@ function buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour)
 	local z = z or 0
 	local tileID = tileID or 2
 	local oType = oType or "floor"
-	local oBehaviour = oBehaviour
+	local oBehaviour = oBehaviour or {}
 	for x = x1, x2 do
 		for y = y1, y2 do
 			addObject(x, y, z, tileID, oType, oBehaviour)
 		end
+	end
+end
+
+function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour)
+	for z = z1, z2 do
+		buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour)
 	end
 end
