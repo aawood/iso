@@ -15,6 +15,7 @@ function love.load()
 	grav = 0
 	map = {}
 	objects = {}
+	debugText = "Test"
 
 	loadTileset()
 	genMap()
@@ -23,31 +24,34 @@ end
 function love.update(dt)
 	timeElapsed = dt
 	runBehaviours()
+	debugText = tostring(objects[3].curY)
 end
 
 function love.draw()
 	genDepthMaps()
 	drawObjects()
+	love.graphics.print(debugText, 0, 0)
 end
 
 function genMap()
 --[[	
 	syntax
-	addObject(x, y, z, tileID, oType, oBehaviour)
-	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour)
-	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour)
+	addObject(x, y, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
+	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
+	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, height, xWidth, yWidth)
 --]]
+	
+	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
+	addObject(8.1, 8.1, 0, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "7"}, bName = "solid"}, 0.8, 0.8, 0.8)
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
-	buildFlat(0, 0, 16, 0, 8, 7, "frontWall")
+	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", {}, 1.5, 1, 0)
 	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
 	buildFlat(17, 0, 17, 16, 8, 5, "backWall")
---	buildFlat(0, 0, 16, 16, 8, 3, "floor")
+	buildFlat(0, 0, 16, 16, 8, 3, "floor")
 	buildBlock(0, 0, 6, 3, 3, 8, 1, "object")
-	addObject(8, 8, 3, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "5"}, bName = "solid"})
-	addObject(8, 8, 8)
-	addObject(9, 8, 8)
-	addObject(9, 9, 8)
-	addObject(8, 9, 8)
-	addObject(9, 8, 9)
-	addObject(9, 9, 7)
+	addObject(9, 8, 8, 1, "object", {}, 1, 1, 1)
+	addObject(9, 9, 8, 1, "object", {}, 1, 1, 1)
+	addObject(8, 9, 8, 1, "object", {}, 1, 1, 1)
+	addObject(9, 8, 9, 1, "object", {}, 1, 1, 1)
+	addObject(9, 9, 7, 1, "object", {}, 1, 1, 1)
 end
