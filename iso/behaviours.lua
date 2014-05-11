@@ -5,10 +5,15 @@ function runBehaviours()
 				love.graphics.print(tostring(behaviour), objectIndex, behaviourIndex)
 				if behaviour.bName == "sMove" then
 					sMove(object, behaviour.direction, behaviour.speed)
+				elseif behaviour.bName == "gJump" then
+					gJump(object, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
 				end
 			end
 		end
 	end
+end
+
+function gJump(object, direction, ascentRate, forwardRate)
 end
 
 function sMove(object, direction, speed)
@@ -84,6 +89,21 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object)
 	if collision == 0 then colNo = colNo + 1 end
 	if collision == 1 then colYes = colYes + 1 end	
 	return collision
+end
+
+function addBehaviour(object, newBehaviour)
+	table.insert(object.behaviour, newBehaviour)
+end
+
+
+function behaviourExists(object, behaviourName)
+	exists = 0
+	for behaviourIndex, behaviour in ipairs(object.behaviour) do
+		if behaviour.bName == behaviourName then
+			exists = 1
+		end
+	end
+	return exists
 end
 
 function depthCalc(object)

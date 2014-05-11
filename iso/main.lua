@@ -2,6 +2,7 @@ function love.load()
 	require("renderTools")
 	require("objectTools")
 	require("behaviours")
+	require("controls")
 	screenX = love.graphics.getWidth()
 	screenY = love.graphics.getHeight()
 	cenX = screenX/2
@@ -25,6 +26,7 @@ end
 
 function love.update(dt)
 	timeElapsed = dt
+	checkControls()
 	runBehaviours()
 end
 
@@ -46,7 +48,7 @@ function genMap()
 	
 	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
 --	addObject(8, 8, 8, 1, "object", {})
-	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, bName = "solid"}, 0.8, 0.8, 0.8)
+	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
 	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", {}, 1.5, 1, 0)
 	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
