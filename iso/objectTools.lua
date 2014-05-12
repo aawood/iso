@@ -68,10 +68,9 @@ function debugObjectDetails(objectIndex, xPos)
 	love.graphics.print("       curZ = "..tostring(object.curZ), 0, 60)
 	love.graphics.print("     xWidth = "..tostring(object.xWidth), 0, 70)
 	love.graphics.print("     yWidth = "..tostring(object.yWidth), 0, 80)
-	love.graphics.print("     height = "..tostring(object.zWidth), 0, 90)
+	love.graphics.print("     height = "..tostring(object.height), 0, 90)
 	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 100)
 	love.graphics.print("      oType = "..tostring(object.oType), 0, 110)
-	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 120)	
 	love.graphics.print("Behaviours attached:", 0, 130)
 	local yPos = 140
 	for behaviourIndex, behaviourItem in ipairs(object.behaviour) do

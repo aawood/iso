@@ -13,7 +13,7 @@ function checkControls()
 				local direction = object.facing
 				if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
 					if behaviourExists(object, "gJump") == 0 then
-						addBehaviour(objectIndex, {bName = "gJump", ascentRate = 5, forwardRate = 2, direction = direction})
+						addBehaviour(objectIndex, {bName = "gJump", ascentRate = 3, forwardRate = 2, direction = direction})
 					end
 				end
 			end

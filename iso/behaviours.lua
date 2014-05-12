@@ -5,7 +5,8 @@ function runBehaviours()
 				if behaviour.bName == "sMove" then
 					sMove(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.speed)
 				elseif behaviour.bName == "gJump" then
-					gJump(object, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
+					debugText = "gJump found!"
+					gJump(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
 				end
 			end
 		end
@@ -27,10 +28,12 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 	local hitObstacle = 0
 	zMin = zMin - curAscend
 	zMax = zMax - curAscend
+	debugTest = "gJump called!"
 	if direction == "south" then
 		yMin = yMin - curForward
 		yMax = yMax - curForward
 		if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 0 then
+			debugText = "no collision!"
 			object.curZ = zMax
 			object.curY = yMin
 		else
@@ -66,9 +69,10 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 	end
 	depthCalc(object)
 	if hitObstacle == 1 then
-		object.behaviour[behaviourIndex].ascentRate = ascentRate - (timeElapsed * globalGravity)
 		removeBehaviour(object, behaviourIndex)
 		addBehaviour(objectIndex, {bName = "sMove", direction = "down", speed = "3"})
+	else
+			object.behaviour[behaviourIndex].ascentRate = ascentRate - (timeElapsed * globalGravity)
 	end
 end
 
@@ -165,7 +169,6 @@ function removeBehaviour(object, behaviourIndex)
 end
 
 function behaviourExists(object, behaviourName)
-	debugText = behaviourName
 	exists = 0
 	for behaviourIndex, behaviourItem in ipairs(object.behaviour) do
 		if behaviourItem.bName == behaviourName then
