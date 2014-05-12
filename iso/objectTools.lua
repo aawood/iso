@@ -58,3 +58,24 @@ function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, oHeight, 
 		buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 	end
 end
+
+function debugObjectDetails(objectIndex, xPos)
+	object = objects[objectIndex]
+	local xPos = xPos or 0
+	love.graphics.print("objectIndex = "..tostring(objectIndex), 0, 30)
+	love.graphics.print("       curX = "..tostring(object.curX), 0, 40)
+	love.graphics.print("       curY = "..tostring(object.curY), 0, 50)
+	love.graphics.print("       curZ = "..tostring(object.curZ), 0, 60)
+	love.graphics.print("     xWidth = "..tostring(object.xWidth), 0, 70)
+	love.graphics.print("     yWidth = "..tostring(object.yWidth), 0, 80)
+	love.graphics.print("     height = "..tostring(object.zWidth), 0, 90)
+	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 100)
+	love.graphics.print("      oType = "..tostring(object.oType), 0, 110)
+	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 120)	
+	love.graphics.print("Behaviours attached:", 0, 130)
+	local yPos = 140
+	for behaviourIndex, behaviourItem in ipairs(object.behaviour) do
+		love.graphics.print(tostring(behaviourItem.bName), 0, yPos)
+		yPos = yPos + 10
+	end
+end

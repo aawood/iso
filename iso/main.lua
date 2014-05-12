@@ -13,12 +13,13 @@ function love.load()
 	yOffset = 136
 	love.window.setMode(screenX, screenY)
 	timeElapsed = 0
-	grav = 0
+	globalGravity = 5
 	map = {}
 	objects = {}
 	debugText = "Test"
 	colNo = 0
 	colYes = 0
+	testObject = 1
 
 	loadTileset()
 	genMap()
@@ -33,9 +34,11 @@ end
 function love.draw()
 	genDepthMaps()
 	drawObjects()
-	love.graphics.print(tostring(colNo), 0, 10)
-	love.graphics.print(tostring(colYes), 50, 10)
+--	love.graphics.print(tostring(timeElapsed), 100, 0)
+--	love.graphics.print(tostring(colNo), 0, 10)
+--	love.graphics.print(tostring(colYes), 50, 10)
 	love.graphics.print(debugText, 0, 0)
+	debugObjectDetails(testObject)
 end
 
 function genMap()
@@ -46,9 +49,9 @@ function genMap()
 	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, height, xWidth, yWidth)
 --]]
 	
+	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
 	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
 --	addObject(8, 8, 8, 1, "object", {})
-	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
 	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", {}, 1.5, 1, 0)
 	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
