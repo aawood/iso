@@ -27,7 +27,7 @@ end
 
 function love.update(dt)
 	timeElapsed = dt
---	checkControls()
+	checkControls()
 	runBehaviours()
 end
 
@@ -38,25 +38,25 @@ function love.draw()
 --	love.graphics.print(tostring(colNo), 0, 10)
 --	love.graphics.print(tostring(colYes), 50, 10)
 	love.graphics.print(debugText, 0, 0)
---	debugObjectDetails(testObject)
+	debugObjectDetails(testObject)
 end
 
 function genMap()
 --[[	
 	syntax
-	addObject(x, y, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
-	buildFlat(x1, y1, x2, y2, z, tileID, oType, height, xWidth, yWidth, oBehaviours, oStates)
-	buildBlock(x1, y1, x2, y2, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+	addObject(x, y, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
+	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
+	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, height, xWidth, yWidth)
 --]]
 	
---	addObject(8.1, 8.1, 2, 2, "object", .8, .8, .8, {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}})
---	addObject(8, 8, 8, 1, "object", 1, 1, 1, {{bName = "sMove", direction = "south", speed = "3"}})
-	addObject(8, 8, 8, 1, "object")
---	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
---	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", 1.5, 1, 0)
---	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
---	buildFlat(17, 0, 17, 16, 8, 5, "backWall")
---	buildFlat(0, 0, 16, 16, 8, 3, "floor")
+	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
+--	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
+--	addObject(8, 8, 8, 1, "object", {})
+	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
+	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", {}, 1.5, 1, 0)
+	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
+	buildFlat(17, 0, 17, 16, 8, 5, "backWall")
+	buildFlat(0, 0, 16, 16, 8, 3, "floor")
 --	buildBlock(0, 0, 6, 3, 3, 8, 1, "object")
 --	addObject(9, 8, 8, 1, "object", {}, 1, 1, 1)
 --	addObject(9, 9, 8, 1, "object", {}, 1, 1, 1)

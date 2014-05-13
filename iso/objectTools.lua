@@ -14,11 +14,10 @@ function loadTileset()
 	end
 end
 
-function addObject(x, y, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+function addObject(x, y, z, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 	local x = x or 0
 	local y = y or 0
 	local z = z or 0
-	local tileID = tileID or 1
 	local oType = oType or "object"
 	local height = 1
 	if oType == "floor" then
@@ -29,13 +28,13 @@ function addObject(x, y, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours,
 	local oHeight = oHeight or height
 	local xWidth = xWidth or 1
 	local yWidth = yWidth or 1
-	local oBehaviours = oBehaviours or {}
-	local oStates = oStates or {}
+	local tileID = tileID or 1
+	local oBehaviour = oBehaviour or {}
 	local depth = x + y + (z*0.5) - oHeight
-	table.insert(objects, {tileID = tileID, curX = x, curY = y, curZ = z, oType = oType, behaviours = oBehaviours, oStates = oStates, depth = depth, height = oHeight, xWidth = xWidth, yWidth = yWidth})
+	table.insert(objects, {tileID = tileID, curX = x, curY = y, curZ = z, oType = oType, behaviour = oBehaviour, depth = depth, height = oHeight, xWidth = xWidth, yWidth = yWidth})
 end
 
-function buildFlat(x1, y1, x2, y2, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+function buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 	local x1 = x1 or 0
 	local y1 = y1 or 0
 	local x2 = x2 or 16
@@ -43,21 +42,20 @@ function buildFlat(x1, y1, x2, y2, z, tileID, oType, oHeight, xWidth, yWidth, oB
 	local z = z or 0
 	local tileID = tileID or 2
 	local oType = oType or "floor"
-	local oBehaviours = oBehaviours or {}
-	local oStates = oStates or {}
+	local oBehaviour = oBehaviour or {}
 	local oHeight = oHeight
 	local xWidth = xWidth
 	local yWidth = yWidth
 	for x = x1, x2 do
 		for y = y1, y2 do
-			addObject(x, y, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+			addObject(x, y, z, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 		end
 	end
 end
 
-function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 	for z = z1, z2 do
-		buildFlat(x1, y1, x2, y2, z, tileID, oType, oHeight, xWidth, yWidth, oBehaviours, oStates)
+		buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, oHeight, xWidth, yWidth)
 	end
 end
 
