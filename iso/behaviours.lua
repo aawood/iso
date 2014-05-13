@@ -1,7 +1,12 @@
 function runBehaviours()
 	for objectIndex, object in ipairs(objects) do
 		if object.oType == "object" then
-			for behaviourIndex, behaviour in ipairs(object.behaviour) do
+			if object.behaviours then
+				debugtext = "1"
+			else
+				debugtext = "2"
+			end
+--[[			for behaviourIndex, behaviour in ipairs(object.behaviours) do
 				if behaviour.bName == "sMove" then
 					sMove(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.speed)
 				elseif behaviour.bName == "gJump" then
@@ -9,7 +14,7 @@ function runBehaviours()
 					gJump(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
 				end
 			end
-		end
+--]]		end
 	end
 end
 
@@ -72,7 +77,7 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 		removeBehaviour(object, behaviourIndex)
 		addBehaviour(objectIndex, {bName = "sMove", direction = "down", speed = "3"})
 	else
-			object.behaviour[behaviourIndex].ascentRate = ascentRate - (timeElapsed * globalGravity)
+			object.behaviours[behaviourIndex].ascentRate = ascentRate - (timeElapsed * globalGravity)
 	end
 end
 
@@ -165,12 +170,12 @@ function addBehaviour(objectIndex, newBehaviour)
 end
 
 function removeBehaviour(object, behaviourIndex)
-	table.remove(object.behaviour, behaviourIndex)
+	table.remove(object.behaviours, behaviourIndex)
 end
 
 function behaviourExists(object, behaviourName)
 	exists = 0
-	for behaviourIndex, behaviourItem in ipairs(object.behaviour) do
+	for behaviourIndex, behaviourItem in ipairs(object.behaviours) do
 		if behaviourItem.bName == behaviourName then
 			exists = 1
 		end
