@@ -44,9 +44,9 @@ end
 function genMap()
 --[[	
 	syntax
-	addObject(x, y, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
-	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviour, height, xWidth, yWidth)
-	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviour, height, xWidth, yWidth)
+	addObject(x, y, z, tileID, oType, oBehaviours, height, xWidth, yWidth)
+	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, height, xWidth, yWidth)
+	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, height, xWidth, yWidth)
 --]]
 	
 	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
