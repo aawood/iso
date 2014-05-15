@@ -3,6 +3,7 @@ function love.load()
 	require("objectTools")
 	require("behaviours")
 	require("controls")
+	require("states")
 	screenX = love.graphics.getWidth()
 	screenY = love.graphics.getHeight()
 	cenX = screenX/2
@@ -44,12 +45,12 @@ end
 function genMap()
 --[[	
 	syntax
-	addObject(x, y, z, tileID, oType, oBehaviours, height, xWidth, yWidth)
-	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, height, xWidth, yWidth)
-	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, height, xWidth, yWidth)
+	addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
+	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
+	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 --]]
 	
-	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}, {bName = "solid"}, {bName = "facing", direction = "south"}}, 0.8, 0.8, 0.8)
+	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}}, 0.8, 0.8, 0.8, {solid = true, facing = south})
 --	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
 --	addObject(8, 8, 8, 1, "object", {})
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")

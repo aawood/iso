@@ -14,10 +14,10 @@ function loadTileset()
 	end
 end
 
-function addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
+function addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 	local x = x or 0
 	local y = y or 0
-	local z = z or 0
+ 		local z = z or 0
 	local oType = oType or "object"
 	local height = 1
 	if oType == "floor" then
@@ -30,11 +30,12 @@ function addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
 	local yWidth = yWidth or 1
 	local tileID = tileID or 1
 	local oBehaviours = oBehaviours or {}
+	local oStates = oStates or {}
 	local depth = x + y + (z*0.5) - oHeight
-	table.insert(objects, {tileID = tileID, curX = x, curY = y, curZ = z, oType = oType, behaviours = oBehaviours, depth = depth, height = oHeight, xWidth = xWidth, yWidth = yWidth})
+	table.insert(objects, {tileID = tileID, curX = x, curY = y, curZ = z, oType = oType, behaviours = oBehaviours, depth = depth, height = oHeight, xWidth = xWidth, yWidth = yWidth, states = oStates})
 end
 
-function buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
+function buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 	local x1 = x1 or 0
 	local y1 = y1 or 0
 	local x2 = x2 or 16
@@ -43,19 +44,20 @@ function buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidt
 	local tileID = tileID or 2
 	local oType = oType or "floor"
 	local oBehaviours = oBehaviours or {}
+	local oStates = oStates or {}
 	local oHeight = oHeight
 	local xWidth = xWidth
 	local yWidth = yWidth
 	for x = x1, x2 do
 		for y = y1, y2 do
-			addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
+			addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 		end
 	end
 end
 
-function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
+function buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 	for z = z1, z2 do
-		buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth)
+		buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 	end
 end
 
@@ -71,10 +73,16 @@ function debugObjectDetails(objectIndex, xPos)
 	love.graphics.print("     height = "..tostring(object.height), 0, 90)
 	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 100)
 	love.graphics.print("      oType = "..tostring(object.oType), 0, 110)
-	love.graphics.print("Behaviours attached:", 0, 130)
 	local yPos = 140
-	for behaviourIndex, behaviourItem in ipairs(object.behaviours) do
-		love.graphics.print(tostring(behaviourItem.bName), 0, yPos)
+	love.graphics.print("Behaviours attached:", 0, yPos - 10)
+	for behaviourIndex, behaviour in ipairs(object.behaviours) do
+		love.graphics.print(tostring(behaviour.bName), 0, yPos)
+		yPos = yPos + 10
+	end
+	yPos = yPos + 20
+	love.graphics.print("States attached:", 0, yPos - 10)
+	for stateIndex, state in ipairs(object.states) do
+		love.graphics.print(tostring(state.bName), 0, yPos)
 		yPos = yPos + 10
 	end
 end
