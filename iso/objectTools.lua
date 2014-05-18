@@ -73,16 +73,14 @@ function debugObjectDetails(objectIndex, xPos)
 	love.graphics.print("     height = "..tostring(object.height), 0, 90)
 	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 100)
 	love.graphics.print("      oType = "..tostring(object.oType), 0, 110)
-	local yPos = 140
+	local yPos = 150
 	love.graphics.print("Behaviours attached:", 0, yPos - 10)
 	for behaviourIndex, behaviour in ipairs(object.behaviours) do
 		love.graphics.print(tostring(behaviour.bName), 0, yPos)
 		yPos = yPos + 10
 	end
 	yPos = yPos + 20
-	love.graphics.print("States attached:", 0, yPos - 10)
-	for stateIndex, state in ipairs(object.states) do
-		love.graphics.print(tostring(state.bName), 0, yPos)
-		yPos = yPos + 10
-	end
+
+	love.graphics.print("Known states:", 0, yPos - 10)
+	love.graphics.print("     facing = " .. object.states.facing, 0, 120)
 end

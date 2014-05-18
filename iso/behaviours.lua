@@ -6,14 +6,44 @@ function runBehaviours()
 					sMove(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.speed)
 				elseif behaviour.bName == "gJump" then
 					gJump(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
+				elseif behaviour.bName == "turnRight" then
+					turnRight(object, behaviourIndex)
+				elseif behaviour.bName == "turnLeft" then
+					turnLeft(object, behaviourIndex)
 				end
 			end
 		end
 	end
 end
 
+function turnRight(object, behaviourIndex)
+	if object.states.facing == "north" then
+		object.states.facing = "east"
+	elseif object.states.facing == "east" then
+		object.states.facing = "south"
+	elseif object.states.facing == "south" then
+		object.states.facing = "west"
+	elseif object.states.facing == "west" then
+		object.states.facing = "north"
+	end
+	removeBehaviour(object, behaviourIndex)
+end
+
+function turnLeft(object, behaviourIndex)
+	if object.states.facing == "north" then
+		object.states.facing = "west"
+	elseif object.states.facing == "west" then
+		object.states.facing = "south"
+	elseif object.states.facing == "south" then
+		object.states.facing = "east"
+	elseif object.states.facing == "east" then
+		object.states.facing = "north"
+	end
+	removeBehaviour(object, behaviourIndex)
+end
+
 function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwardRate)
-	local direction = direction or "south"
+	local direction = direction or "west"
 	local xMin = object.curX
 	local xMax = object.curX + object.xWidth
 	local yMin = object.curY
@@ -27,12 +57,10 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 	local hitObstacle = 0
 	zMin = zMin - curAscend
 	zMax = zMax - curAscend
-	debugTest = "gJump called!"
 	if direction == "south" then
 		yMin = yMin - curForward
 		yMax = yMax - curForward
 		if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 0 then
-			debugText = "no collision!"
 			object.curZ = zMax
 			object.curY = yMin
 		else

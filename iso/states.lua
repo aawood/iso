@@ -1,14 +1,14 @@
-function addState(objectIndex, newState, value)
+function addState(objectIndex, state, value)
 	value = value or true
-	objects[objectIndex].states[newState] = value
+	objects[objectIndex].states.state = value
 end
 
-function removeState(object, stateName)
-	object.states[stateIndex] = nil
+function removeState(object, state)
+	object.states.state = nil
 end
 
-function stateExists(object, stateName)
-	if object.states[stateName] then
+function stateExists(object, state)
+	if object.states.state then
 		return true
 	else
 		return false
