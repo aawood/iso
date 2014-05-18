@@ -26,6 +26,7 @@ function turnRight(object, behaviourIndex)
 	elseif object.states.facing == "west" then
 		object.states.facing = "north"
 	end
+	addState(object, "turnedRight")
 	removeBehaviour(object, behaviourIndex)
 end
 
@@ -39,6 +40,7 @@ function turnLeft(object, behaviourIndex)
 	elseif object.states.facing == "east" then
 		object.states.facing = "north"
 	end
+	addState(object, "turnedLeft")
 	removeBehaviour(object, behaviourIndex)
 end
 
@@ -196,10 +198,10 @@ function removeBehaviour(object, behaviourIndex)
 end
 
 function behaviourExists(object, behaviourName)
-	exists = 0
+	exists = false
 	for behaviourIndex, behaviourItem in ipairs(object.behaviours) do
 		if behaviourItem.bName == behaviourName then
-			exists = 1
+			exists = true
 		end
 	end
 	return exists

@@ -7,7 +7,9 @@ inventoryKey = "e"
 pauseKey = "p"
 
 function checkControls()
+	debugtext = "Controls"
 	if love.keyboard.isDown(jumpKey) then
+		debugtext = jumpKey
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == 1 then
 				local xMin = object.curX
@@ -20,29 +22,51 @@ function checkControls()
 				zMax = zMax + 0.1
 				local direction = object.states.facing
 				if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
-					if behaviourExists(object, "gJump") == 0 then
+					if behaviourExists(object, "gJump") == false then
 						addBehaviour(objectIndex, {bName = "gJump", ascentRate = 3.4, forwardRate = 1, direction = direction})
 					end
 				end
 			end
 		end
 	end
-	if love.keyboard.isDown(turnRightKey) then
+--[[	if love.keyboard.isDown(turnRightKey) then
+		debugtext = turnRightKey
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == 1 then
-				if behaviourExists(object, "turnRight") == 0 then
-					addBehaviour(objectIndex, {bName = "turnRight"})
+				if behaviourExists(object, "turnRight") == false then
+					if stateExists("turnedRight") == false then
+						addBehaviour(objectIndex, {bName = "turnRight"})
+					end
 				end
 			end
 		end		
+	else
+		for objectIndex, object in ipairs(objects) do
+			if behaviourExists(object, "player") == true then
+				if stateExists("turnedRight") == true then
+					removeState(object, "turnedRight")
+				end
+			end
+		end
 	end
 	if love.keyboard.isDown(turnLeftKey) then
+		debugText = turnLeftKey
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == 1 then
-				if behaviourExists(object, "turnLeft") == 0 then
-					addBehaviour(objectIndex, {bName = "turnLeft"})
+			if behaviourExists(object, "player") == true then
+				if behaviourExists(object, "turnLeft") == false then
+					if stateExists("turnedLeft") == false then
+						addBehaviour(objectIndex, {bName = "turnLeft"})
+					end
 				end
 			end
-		end		
+		end
+	else
+		for objectIndex, object in ipairs(objects) do
+			if behaviourExists(object, "player") == true then
+				if stateExists("turnedLeft") == true then
+					removeState(object, "turnedLeft")
+				end
+			end
+		end
 	end
-end
+--]]end
