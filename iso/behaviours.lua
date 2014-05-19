@@ -1,6 +1,18 @@
 function runBehaviours()
 	for objectIndex, object in ipairs(objects) do
 		if object.oType == "object" then
+      if object.states.heavy == true then
+        if moveTo(object, objectIndex, 0, 0, object.states.gravity * globalGravity * timeElapsed) == true then
+          object.states.gravity = object.states.gravity + timeElapsed
+        else
+          object.states.gravity = 0
+          if behaviourExists(object, "gJump") == true then
+            removeBehaviour(object, findBehaviourIndex(object, "gJump"))
+--            removeBehaviour(object, "gJump")
+          end
+        end
+      end
+
 			for behaviourIndex, behaviour in ipairs(object.behaviours) do
 				if behaviour.bName == "sMove" then
 					sMove(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.speed)
@@ -102,8 +114,6 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 	if hitObstacle == 1 then
 		removeBehaviour(object, behaviourIndex)
 		addBehaviour(objectIndex, {bName = "sMove", direction = "down", speed = "3"})
-	else
-			object.behaviours[behaviourIndex].ascentRate = ascentRate - (timeElapsed * globalGravity)
 	end
 end
 
@@ -235,12 +245,21 @@ end
 
 function behaviourExists(object, behaviourName)
 	exists = false
-	for behaviourIndex, behaviourItem in ipairs(object.behaviours) do
-		if behaviourItem.bName == behaviourName then
+	for behaviourIndex, behaviour in ipairs(object.behaviours) do
+		if behaviour.bName == behaviourName then
 			exists = true
 		end
 	end
 	return exists
+end
+
+function findBehaviourIndex(object, behaviourName)
+  for behaviourIndex, behaviour in ipairs(object.behaviours) do
+    if behaviour.bName == behaviourName then
+      return behaviourIndex
+    end
+  end
+  return false
 end
 
 function depthCalc(object)

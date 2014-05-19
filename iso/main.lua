@@ -52,7 +52,7 @@ function genMap()
 	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 --]]
 
-	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}, {bName = "sMove", direction = "down", speed = "3"}}, 0.8, 0.8, 0.8, {solid = true, facing = "east"})
+	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}}, 0.8, 0.8, 0.8, {solid = true, facing = "east", gravity = 1, heavy = true})
 	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
 	addObject(8, 8, 8, 1, "object", {})
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
