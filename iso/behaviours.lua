@@ -10,6 +10,8 @@ function runBehaviours()
 					turnRight(object, behaviourIndex)
 				elseif behaviour.bName == "turnLeft" then
 					turnLeft(object, behaviourIndex)
+        elseif behaviour.bName == "moveForward" then
+          moveForward(object, objectIndex, behaviour.speed, behaviourIndex)
 				end
 			end
 		end
@@ -50,7 +52,7 @@ function gJump(object, objectIndex, behaviourIndex, direction, ascentRate, forwa
 	local xMax = object.curX + object.xWidth
 	local yMin = object.curY
 	local yMax = object.curY + object.yWidth
-	local zMin = object.curZ - object.height 
+	local zMin = object.curZ - object.height
 	local zMax = object.curZ
 	local ascentRate = ascentRate or 1
 	local forwardRate = forwardRate or 1
@@ -112,7 +114,7 @@ function sMove(object, objectIndex, behaviourIndex, direction, speed)
 	local xMax = object.curX + object.xWidth
 	local yMin = object.curY
 	local yMax = object.curY + object.yWidth
-	local zMin = object.curZ - object.height 
+	local zMin = object.curZ - object.height
 	local zMax = object.curZ
 	local hitObstacle = 1
 	if direction == "down" then
@@ -164,6 +166,40 @@ function sMove(object, objectIndex, behaviourIndex, direction, speed)
 	end
 end
 
+function moveTo(object, objectIndex, addX, addY, addZ)
+  local xMin = object.curX + addX
+	local xMax = object.curX + object.xWidth + addX
+	local yMin = object.curY + addY
+	local yMax = object.curY + object.yWidth + addY
+	local zMin = object.curZ - object.height + addZ
+	local zMax = object.curZ + addZ
+  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 0 then
+    object.curX = xMin
+    object.curY = yMin
+    object.curZ = zMax
+    depthCalc(object)
+    return true
+  else
+    return false
+  end
+end
+
+function moveForward(object, objectIndex, speed, behaviourIndex)
+  local direction = object.states.facing
+  local collided
+  local speed = speed * timeElapsed
+  if direction == "north" then
+    collided = moveTo(object, objectIndex, 0, speed, 0)
+  elseif direction == "east" then
+    collided = moveTo (object, objectIndex, speed, 0, 0)
+  elseif direction == "south" then
+    collided = moveTo (object, objectIndex, 0, -speed, 0)
+  elseif direction == "west" then
+    collided = moveTo (object, objectIndex, -speed, 0, 0)
+  end
+  removeBehaviour(object, behaviourIndex)
+end
+
 function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object)
 	local collision = 0
 
@@ -185,7 +221,7 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object)
 		end
 	end
 	if collision == 0 then colNo = colNo + 1 end
-	if collision == 1 then colYes = colYes + 1 end	
+	if collision == 1 then colYes = colYes + 1 end
 	return collision
 end
 

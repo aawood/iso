@@ -1,5 +1,6 @@
 function addState(object, state, value)
-	value = value or true
+  addDebug("Adding state "..tostring(state).." with value "..tostring(value))
+  value = value or true
 	object.states[state] = value
 end
 
@@ -8,6 +9,7 @@ function removeState(object, state)
 end
 
 function stateExists(object, state)
+--  addDebug("checking "..tostring(object.oType).." state of "..tostring(state))
 	if object.states then
 		return object.states[state] ~= nil
 	else

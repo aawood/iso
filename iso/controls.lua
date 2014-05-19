@@ -28,11 +28,10 @@ function checkControls()
 		end
 	end
 	if love.keyboard.isDown(turnRightKey) then
-    addDebug("Right key pressed")
-		debugtext = turnRightKey
+--    addDebug("Right key pressed")
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
-        if stateExists("turnedRight") == false then
+        if stateExists(object, "turnedRight") == false then
           addBehaviour(objectIndex, {bName = "turnRight"})
         end
 			end
@@ -40,17 +39,17 @@ function checkControls()
 	else
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
-				if stateExists("turnedRight") == true then
+				if stateExists(object, "turnedRight") == true then
 					removeState(object, "turnedRight")
 				end
 			end
 		end
 	end
 	if love.keyboard.isDown(turnLeftKey) then
-    addDebug("Left Key Pressed")
+--    addDebug("Left Key Pressed")
     for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
-        if stateExists("turnedLeft") == false then
+        if stateExists(object, "turnedLeft") == false then
           addBehaviour(objectIndex, {bName = "turnLeft"})
         end
 			end
@@ -58,10 +57,17 @@ function checkControls()
 	else
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
-				if stateExists("turnedLeft") == true then
+				if stateExists(object, "turnedLeft") == true then
 					removeState(object, "turnedLeft")
 				end
 			end
 		end
 	end
+  if love.keyboard.isDown(forwardKey) then
+    for objectIndex, object in ipairs(objects) do
+      if behaviourExists(object, "player") == true then
+        addBehaviour(objectIndex, {bName = "moveForward", speed = 1})
+      end
+    end
+  end
 end
