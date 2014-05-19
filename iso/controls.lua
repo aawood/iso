@@ -7,16 +7,14 @@ inventoryKey = "e"
 pauseKey = "p"
 
 function checkControls()
-	debugtext = "Controls"
 	if love.keyboard.isDown(jumpKey) then
-		debugtext = jumpKey
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == 1 then
+			if behaviourExists(object, "player") == true then
 				local xMin = object.curX
 				local xMax = object.curX + object.xWidth
 				local yMin = object.curY
 				local yMax = object.curY + object.yWidth
-				local zMin = object.curZ - object.height 
+				local zMin = object.curZ - object.height
 				local zMax = object.curZ
 				zMin = zMin + 0.1
 				zMax = zMax + 0.1
@@ -29,17 +27,16 @@ function checkControls()
 			end
 		end
 	end
---[[	if love.keyboard.isDown(turnRightKey) then
+	if love.keyboard.isDown(turnRightKey) then
+    addDebug("Right key pressed")
 		debugtext = turnRightKey
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == 1 then
-				if behaviourExists(object, "turnRight") == false then
-					if stateExists("turnedRight") == false then
-						addBehaviour(objectIndex, {bName = "turnRight"})
-					end
-				end
+			if behaviourExists(object, "player") == true then
+        if stateExists("turnedRight") == false then
+          addBehaviour(objectIndex, {bName = "turnRight"})
+        end
 			end
-		end		
+		end
 	else
 		for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
@@ -50,14 +47,12 @@ function checkControls()
 		end
 	end
 	if love.keyboard.isDown(turnLeftKey) then
-		debugText = turnLeftKey
-		for objectIndex, object in ipairs(objects) do
+    addDebug("Left Key Pressed")
+    for objectIndex, object in ipairs(objects) do
 			if behaviourExists(object, "player") == true then
-				if behaviourExists(object, "turnLeft") == false then
-					if stateExists("turnedLeft") == false then
-						addBehaviour(objectIndex, {bName = "turnLeft"})
-					end
-				end
+        if stateExists("turnedLeft") == false then
+          addBehaviour(objectIndex, {bName = "turnLeft"})
+        end
 			end
 		end
 	else
@@ -69,4 +64,4 @@ function checkControls()
 			end
 		end
 	end
---]]end
+end

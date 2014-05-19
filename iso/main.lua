@@ -4,6 +4,7 @@ function love.load()
 	require("behaviours")
 	require("controls")
 	require("states")
+  require("myDebug")
 	screenX = love.graphics.getWidth()
 	screenY = love.graphics.getHeight()
 	cenX = screenX/2
@@ -17,8 +18,8 @@ function love.load()
 	globalGravity = 5
 	map = {}
 	objects = {}
-	debugText = "Test"
-	colNo = 0
+  debug = true
+  colNo = 0
 	colYes = 0
 	testObject = 1
 
@@ -29,6 +30,7 @@ end
 function love.update(dt)
 	timeElapsed = dt
 	checkControls()
+--  addDebug("Controls checked")
 	runBehaviours()
 end
 
@@ -38,12 +40,12 @@ function love.draw()
 --	love.graphics.print(tostring(timeElapsed), 100, 0)
 --	love.graphics.print(tostring(colNo), 0, 10)
 --	love.graphics.print(tostring(colYes), 50, 10)
-	love.graphics.print(debugText, 0, 0)
 	debugObjectDetails(testObject)
+  printDebug()
 end
 
 function genMap()
---[[	
+--[[
 	syntax
 	addObject(x, y, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 	buildFlat(x1, y1, x2, y2, z, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
