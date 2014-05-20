@@ -20,8 +20,8 @@ function checkControls()
 				zMax = zMax + 0.1
 				local direction = object.states.facing
 				if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
-					if behaviourExists(object, "gJump") == false then
-						addBehaviour(objectIndex, {bName = "gJump", ascentRate = 3.4, forwardRate = 1, direction = direction})
+					if behaviourExists(object, "jump") == false then
+						addBehaviour(objectIndex, {bName = "jump", ascentRate = 3.4, forwardRate = 1, direction = direction})
 					end
 				end
 			end
@@ -66,7 +66,7 @@ function checkControls()
   if love.keyboard.isDown(forwardKey) then
     for objectIndex, object in ipairs(objects) do
       if behaviourExists(object, "player") == true then
-        addBehaviour(objectIndex, {bName = "moveForward", speed = 1})
+        addBehaviour(objectIndex, {bName = "moveForward", speed = 2})
       end
     end
   end
