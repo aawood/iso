@@ -6,10 +6,14 @@ backwardsKey = "s"
 inventoryKey = "e"
 pauseKey = "p"
 
+playerJumpStrength = 4.7
+playerJumpSpeed = 1.6
+playerRunSpeed = 3
+
 function checkControls()
 	if love.keyboard.isDown(jumpKey) then
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == true then
+			if stateExists(object, "player") == true then
 				local xMin = object.curX
 				local xMax = object.curX + object.xWidth
 				local yMin = object.curY
@@ -19,9 +23,9 @@ function checkControls()
 				zMin = zMin + 0.1
 				zMax = zMax + 0.1
 				local direction = object.states.facing
-				if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
+				if onGround(object) == true then
 					if behaviourExists(object, "jump") == false then
-						addBehaviour(objectIndex, {bName = "jump", ascentRate = 3.4, forwardRate = 1, direction = direction})
+						addBehaviour(objectIndex, {bName = "jump", ascentRate = playerJumpStrength, forwardRate = playerJumpSpeed, direction = direction})
 					end
 				end
 			end
@@ -30,7 +34,7 @@ function checkControls()
 	if love.keyboard.isDown(turnRightKey) then
 --    addDebug("Right key pressed")
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == true then
+			if stateExists(object, "player") == true then
         if stateExists(object, "turnedRight") == false then
           addBehaviour(objectIndex, {bName = "turnRight"})
         end
@@ -38,7 +42,7 @@ function checkControls()
 		end
 	else
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == true then
+			if stateExists(object, "player") == true then
 				if stateExists(object, "turnedRight") == true then
 					removeState(object, "turnedRight")
 				end
@@ -48,7 +52,7 @@ function checkControls()
 	if love.keyboard.isDown(turnLeftKey) then
 --    addDebug("Left Key Pressed")
     for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == true then
+			if stateExists(object, "player") == true then
         if stateExists(object, "turnedLeft") == false then
           addBehaviour(objectIndex, {bName = "turnLeft"})
         end
@@ -56,7 +60,7 @@ function checkControls()
 		end
 	else
 		for objectIndex, object in ipairs(objects) do
-			if behaviourExists(object, "player") == true then
+			if stateExists(object, "player") == true then
 				if stateExists(object, "turnedLeft") == true then
 					removeState(object, "turnedLeft")
 				end
@@ -65,8 +69,10 @@ function checkControls()
 	end
   if love.keyboard.isDown(forwardKey) then
     for objectIndex, object in ipairs(objects) do
-      if behaviourExists(object, "player") == true then
-        addBehaviour(objectIndex, {bName = "moveForward", speed = 2})
+      if stateExists(object, "player") == true then
+        if onGround(object) == true then
+          addBehaviour(objectIndex, {bName = "moveForward", speed = playerRunSpeed})
+        end
       end
     end
   end

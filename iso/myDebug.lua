@@ -1,3 +1,6 @@
+debug = true
+testObject = 1
+
 function addDebug(string)
     debugLines = debugLines or {}
     maxLines = math.floor(screenY / 10)
@@ -19,23 +22,31 @@ end
 function debugObjectDetails(objectIndex, xPos)
 	object = objects[objectIndex]
 	local xPos = xPos or 0
-	love.graphics.print("objectIndex = "..tostring(objectIndex), 0, 30)
-	love.graphics.print("       curX = "..tostring(object.curX), 0, 40)
-	love.graphics.print("       curY = "..tostring(object.curY), 0, 50)
-	love.graphics.print("       curZ = "..tostring(object.curZ), 0, 60)
-	love.graphics.print("     xWidth = "..tostring(object.xWidth), 0, 70)
-	love.graphics.print("     yWidth = "..tostring(object.yWidth), 0, 80)
-	love.graphics.print("     height = "..tostring(object.height), 0, 90)
-	love.graphics.print("     tileID = "..tostring(object.tileID), 0, 100)
-	love.graphics.print("      oType = "..tostring(object.oType), 0, 110)
+	love.graphics.print("objectIndex = "..tostring(objectIndex), xPos, 30)
+	love.graphics.print("       curX = "..tostring(object.curX), xPos, 40)
+	love.graphics.print("       curY = "..tostring(object.curY), xPos, 50)
+	love.graphics.print("       curZ = "..tostring(object.curZ), xPos, 60)
+	love.graphics.print("     xWidth = "..tostring(object.xWidth), xPos, 70)
+	love.graphics.print("     yWidth = "..tostring(object.yWidth), xPos, 80)
+	love.graphics.print("     height = "..tostring(object.height), xPos, 90)
+	love.graphics.print("     tileID = "..tostring(object.tileID), xPos, 100)
+	love.graphics.print("      oType = "..tostring(object.oType), xPos, 110)
 	local yPos = 150
-	love.graphics.print("Behaviours attached:", 0, yPos - 10)
+	love.graphics.print("Behaviours attached:", xPos, yPos - 10)
 	for behaviourIndex, behaviour in ipairs(object.behaviours) do
-		love.graphics.print(tostring(behaviour.bName), 0, yPos)
+		love.graphics.print(tostring(behaviour.bName), xPos, yPos)
 		yPos = yPos + 10
 	end
 	yPos = yPos + 20
 
-	love.graphics.print("Known states:", 0, yPos - 10)
-	love.graphics.print("     facing = " .. object.states.facing, 0, 120)
+	love.graphics.print("Known states:", xPos, yPos - 10)
+	love.graphics.print("     facing = " .. tostring(object.states.facing), xPos, yPos)
+  yPos = yPos + 10
+  if stateExists(object, "player") == true then
+    love.graphics.print("  Is Player = " .. tostring(object.states.player), xPos, yPos)
+  end
+  yPos = yPos + 10
+  if stateExists(object, "gravity") == true then
+    love.graphics.print("  gravity = " .. tostring(object.states.gravity), xPos, yPos)
+  end
 end

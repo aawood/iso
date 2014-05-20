@@ -59,11 +59,11 @@ function turnLeft(object, behaviourIndex)
 end
 
 function jump(object, objectIndex, behaviourIndex, direction, ascentRate, forwardRate)
-  addDebug("Jumping")
+--  addDebug("Jumping")
   moveForward(object, objectIndex, forwardRate, behaviourIndex, direction)
-  addDebug("Attempting to ascend by" .. tostring(-ascentRate * timeElapsed))
+--  addDebug("Attempting to ascend by" .. tostring(-ascentRate * timeElapsed))
   if moveTo(object, objectIndex, 0, 0, -ascentRate * timeElapsed) == false then
-    addDebug("Collided, removing jump")
+--    addDebug("Collided, removing jump")
     ascentRate = 0
   end
 end
@@ -104,8 +104,6 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object)
 			end
 		end
 	end
-	if collision == 0 then colNo = colNo + 1 end
-	if collision == 1 then colYes = colYes + 1 end
 	return collision
 end
 
@@ -124,6 +122,22 @@ function moveTo(object, objectIndex, addX, addY, addZ)
     object.curY = yMin
     object.curZ = zMax
     depthCalc(object)
+    return true
+  else
+    return false
+  end
+end
+
+function onGround(object)
+  local xMin = object.curX
+	local xMax = object.curX + object.xWidth
+	local yMin = object.curY
+	local yMax = object.curY + object.yWidth
+	local zMin = object.curZ - object.height
+	local zMax = object.curZ
+  zMin = zMin + 0.02
+  zMax = zMax + 0.02
+  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
     return true
   else
     return false

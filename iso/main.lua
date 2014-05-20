@@ -15,13 +15,9 @@ function love.load()
 	yOffset = 136
 	love.window.setMode(screenX, screenY)
 	timeElapsed = 0
-	globalGravity = 5
+	globalGravity = 10
 	map = {}
 	objects = {}
-  debug = true
-  colNo = 0
-	colYes = 0
-	testObject = 1
 
 	loadTileset()
 	genMap()
@@ -52,7 +48,7 @@ function genMap()
 	buildBlock(x1, y1, z1, x2, y2, z2, tileID, oType, oBehaviours, oHeight, xWidth, yWidth, oStates)
 --]]
 
-	addObject(8.1, 8.1, 2, 2, "object", {{bName = "player"}}, 0.8, 0.8, 0.8, {solid = true, facing = "east", gravity = 1, heavy = true})
+	addObject(8.1, 8.1, 2, 2, "object", {}, 0.8, 0.8, 0.8, {solid = true, facing = "east", gravity = 1, heavy = true, player = true})
 	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
 	addObject(8, 8, 8, 1, "object", {})
 	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")

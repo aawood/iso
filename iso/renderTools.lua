@@ -6,7 +6,7 @@ function genDepthMaps()
 	for i, object in ipairs(objects) do
 		table.insert(depthMap, object.depth)
 	end
-		
+
 	-- Generate table with unique depth values, then sort, then reverse
 	local depthHash = {}
 	local depthRes = {}
@@ -41,7 +41,7 @@ function drawObjects()
 			end
 		end
 	end
-	
+
 	for depthIndex, depth in ipairs(depthMap) do
 		for objectIndex, object in ipairs(objects) do
 			if object.depth == depth and object.oType == "frontWall" then
@@ -55,7 +55,7 @@ function drawObjects()
 			end
 		end
 	end
-	
+
 	for depthIndex, depth in ipairs(depthMap) do
 		for objectIndex, object in ipairs(objects) do
 			if object.depth == depth and object.oType == "frontDoor" then
