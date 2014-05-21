@@ -5,6 +5,7 @@ function love.load()
 	require("controls")
 	require("states")
   require("myDebug")
+  require("collisions")
 	screenX = love.graphics.getWidth()
 	screenY = love.graphics.getHeight()
 	cenX = screenX/2

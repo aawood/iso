@@ -75,39 +75,12 @@ function moveForward(object, objectIndex, speed, behaviourIndex, direction)
   if direction == "north" then
     collided = moveTo(object, objectIndex, 0, speed, 0)
   elseif direction == "east" then
-    collided = moveTo (object, objectIndex, speed, 0, 0)
+    collided = moveTo(object, objectIndex, speed, 0, 0)
   elseif direction == "south" then
-    collided = moveTo (object, objectIndex, 0, -speed, 0)
+    collided = moveTo(object, objectIndex, 0, -speed, 0)
   elseif direction == "west" then
-    collided = moveTo (object, objectIndex, -speed, 0, 0)
+    collided = moveTo(object, objectIndex, -speed, 0, 0)
   end
---  removeBehaviour(object, behaviourIndex)
-end
-
-function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object)
-	local collision = 0
-
-	-- Need a tiny buffer to stop adjacent-but-not-overlapping objects from colliding.
-	local xMin = xMin + 0.01
-	local xMax = xMax - 0.01
-	local yMin = yMin + 0.01
-	local yMax = yMax - 0.01
-	local zMin = zMin + 0.01
-	local zMax = zMax - 0.01
-
-	for objectIndex, altObject in ipairs(objects) do
-	-- Make sure we're not colliding with ourself
-		if altObject ~= object then
-			-- If we're on overlapping x/y co-ordinates, check if increasing Z would put us into alt object. If so, it's a collision.
-			if altObject.curX + altObject.xWidth >= xMin and altObject.curX <= xMax and altObject.curY + altObject.yWidth >= yMin and altObject.curY <= yMax and altObject.curZ >= zMin and altObject.curZ - altObject.height <= zMax then
-				collision = 1
-			end
-		end
-	end
-	return collision
-end
-
-function onCollision(collidedObjects)
 end
 
 function moveTo(object, objectIndex, addX, addY, addZ)
@@ -117,7 +90,7 @@ function moveTo(object, objectIndex, addX, addY, addZ)
 	local yMax = object.curY + object.yWidth + addY
 	local zMin = object.curZ - object.height + addZ
 	local zMax = object.curZ + addZ
-  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 0 then
+  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex) == false then
     object.curX = xMin
     object.curY = yMin
     object.curZ = zMax
@@ -137,11 +110,7 @@ function onGround(object)
 	local zMax = object.curZ
   zMin = zMin + 0.02
   zMax = zMax + 0.02
-  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object) == 1 then
-    return true
-  else
-    return false
-  end
+  return checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex)
 end
 
 function addBehaviour(objectIndex, newBehaviour)
