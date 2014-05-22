@@ -5,7 +5,11 @@ function runBehaviours()
         if moveTo(object, objectIndex, 0, 0, object.states.gravity * globalGravity * timeElapsed) == true then
           object.states.gravity = object.states.gravity + timeElapsed
         else
-          object.states.gravity = 0
+          if object.states.gravity > 0.02 then
+            object.states.gravity = object.states.gravity / 3
+          else
+            object.states.gravity = 0
+          end
           if behaviourExists(object, "jump") == true then
             removeBehaviour(object, findBehaviourIndex(object, "jump"))
           end
@@ -59,27 +63,23 @@ function turnLeft(object, behaviourIndex)
 end
 
 function jump(object, objectIndex, behaviourIndex, direction, ascentRate, forwardRate)
---  addDebug("Jumping")
   moveForward(object, objectIndex, forwardRate, behaviourIndex, direction)
---  addDebug("Attempting to ascend by" .. tostring(-ascentRate * timeElapsed))
   if moveTo(object, objectIndex, 0, 0, -ascentRate * timeElapsed) == false then
---    addDebug("Collided, removing jump")
     ascentRate = 0
   end
 end
 
 function moveForward(object, objectIndex, speed, behaviourIndex, direction)
   local direction = direction or object.states.facing
-  local collided
   local speed = speed * timeElapsed
   if direction == "north" then
-    collided = moveTo(object, objectIndex, 0, speed, 0)
+    return moveTo(object, objectIndex, 0, speed, 0)
   elseif direction == "east" then
-    collided = moveTo(object, objectIndex, speed, 0, 0)
+    return moveTo(object, objectIndex, speed, 0, 0)
   elseif direction == "south" then
-    collided = moveTo(object, objectIndex, 0, -speed, 0)
+    return moveTo(object, objectIndex, 0, -speed, 0)
   elseif direction == "west" then
-    collided = moveTo(object, objectIndex, -speed, 0, 0)
+    return moveTo(object, objectIndex, -speed, 0, 0)
   end
 end
 
@@ -114,11 +114,12 @@ function onGround(object)
 end
 
 function addBehaviour(objectIndex, newBehaviour)
+  addDebug("Adding Behaviour "..newBehaviour.bName)
 	table.insert(objects[objectIndex].behaviours, newBehaviour)
 end
 
 function removeBehaviour(object, behaviourIndex)
---  addDebug("Removing Behaviour")
+  addDebug("Removing Behaviour ".. object.behaviours[behaviourIndex].bName)
 	table.remove(object.behaviours, behaviourIndex)
 end
 

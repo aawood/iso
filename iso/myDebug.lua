@@ -4,7 +4,7 @@ testObject = 1
 function addDebug(string)
     debugLines = debugLines or {}
     maxLines = math.floor(screenY / 10)
-    table.insert(debugLines, {timeElapsed, string})
+    table.insert(debugLines, {epochTime, string})
     if #debugLines > maxLines then
         table.remove(debugLines, 1)
     end

@@ -5,6 +5,7 @@ function addState(object, state, value)
 end
 
 function removeState(object, state)
+  addDebug("Removing state "..tostring(state))
 	object.states[state] = nil
 end
 

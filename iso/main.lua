@@ -12,7 +12,7 @@ function love.load()
 	cenY = screenY/2
 	xLimit = cenX/1.5
 	yLimit = cenY/1.5
-	xOffset = 0
+	xOffset = -150
 	yOffset = 136
 	love.window.setMode(screenX, screenY)
 	timeElapsed = 0
@@ -20,12 +20,15 @@ function love.load()
 	map = {}
 	objects = {}
 
+  epochTime = 0
+
 	loadTileset()
 	genMap()
 end
 
 function love.update(dt)
 	timeElapsed = dt
+  epochTime = epochTime + 1
 	checkControls()
 --  addDebug("Controls checked")
 	runBehaviours()
