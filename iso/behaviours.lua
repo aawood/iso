@@ -19,22 +19,44 @@ function runBehaviours()
 			for behaviourIndex, behaviour in ipairs(object.behaviours) do
 				if behaviour.bName == "gJump" then
 					gJump(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
-				elseif behaviour.bName == "jump" then
+        end
+      end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+			  if behaviour.bName == "jump" then
 					jump(object, objectIndex, behaviourIndex, behaviour.direction, behaviour.ascentRate, behaviour.forwardRate)
-				elseif behaviour.bName == "turnRight" then
-					turnRight(object, behaviourIndex)
-				elseif behaviour.bName == "turnLeft" then
-					turnLeft(object, behaviourIndex)
-        elseif behaviour.bName == "moveForward" then
-          moveForward(object, objectIndex, behaviour.speed, behaviourIndex)
+			  end
+      end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+				if behaviour.bName == "turnRight" then
+					turnRight(object, objectIndex, behaviourIndex)
+			  end
+      end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+				if behaviour.bName == "turnLeft" then
+					turnLeft(object, objectIndex, behaviourIndex)
+        end
+      end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+			  if behaviour.bName == "moveForward" then
+          moveForward(object, objectIndex, behaviour.speed)
           removeBehaviour(object, behaviourIndex)
 				end
 			end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+        if behaviour.bName == "travel" then
+          travel(object, objectIndex, behaviour.speed, behaviour.direction)
+        end
+      end
+      for behaviourIndex, behaviour in ipairs(object.behaviours) do
+        if behaviour.bName == "bounce" then
+          bounce(object, objectIndex, behaviour.speed, behaviour.direction, behaviourIndex)
+        end
+      end
 		end
 	end
 end
 
-function turnRight(object, behaviourIndex)
+function turnRight(object, objectIndex, behaviourIndex)
 	if object.states.facing == "north" then
 		object.states.facing = "east"
 	elseif object.states.facing == "east" then
@@ -45,10 +67,10 @@ function turnRight(object, behaviourIndex)
 		object.states.facing = "north"
 	end
 	addState(object, "turnedRight")
-	removeBehaviour(object, behaviourIndex)
+  removeBehaviour(object, findBehaviourIndex(object, "turnRight"))
 end
 
-function turnLeft(object, behaviourIndex)
+function turnLeft(object, objectIndex, behaviourIndex)
 	if object.states.facing == "north" then
 		object.states.facing = "west"
 	elseif object.states.facing == "west" then
@@ -59,17 +81,17 @@ function turnLeft(object, behaviourIndex)
 		object.states.facing = "north"
 	end
 	addState(object, "turnedLeft")
-	removeBehaviour(object, behaviourIndex)
+  removeBehaviour(object, findBehaviourIndex(object, "turnLeft"))
 end
 
 function jump(object, objectIndex, behaviourIndex, direction, ascentRate, forwardRate)
-  moveForward(object, objectIndex, forwardRate, behaviourIndex, direction)
+  moveForward(object, objectIndex, forwardRate, direction)
   if moveTo(object, objectIndex, 0, 0, -ascentRate * timeElapsed) == false then
     ascentRate = 0
   end
 end
 
-function moveForward(object, objectIndex, speed, behaviourIndex, direction)
+function moveForward(object, objectIndex, speed, direction)
   local direction = direction or object.states.facing
   local speed = speed * timeElapsed
   if direction == "north" then
@@ -80,6 +102,32 @@ function moveForward(object, objectIndex, speed, behaviourIndex, direction)
     return moveTo(object, objectIndex, 0, -speed, 0)
   elseif direction == "west" then
     return moveTo(object, objectIndex, -speed, 0, 0)
+  elseif direction == "up" then
+    return moveTo(object, objectIndex, 0, 0, -speed)
+  elseif direction == "down" then
+    return moveTo(object, objectIndex, 0, 0, speed)
+  end
+end
+
+function travel(object, objectIndex, speed, direction)
+  return moveForward(object, objectIndex, speed, direction)
+end
+
+function bounce(object, objectIndex, speed, direction, behaviourIndex)
+  if moveForward(object, objectIndex, speed, direction) == false then
+    if object.behaviours[behaviourIndex].direction == "north" then
+      object.behaviours[behaviourIndex].direction = "south"
+    elseif object.behaviours[behaviourIndex].direction == "south" then
+      object.behaviours[behaviourIndex].direction = "north"
+    elseif object.behaviours[behaviourIndex].direction == "east" then
+      object.behaviours[behaviourIndex].direction = "west"
+    elseif object.behaviours[behaviourIndex].direction == "west" then
+      object.behaviours[behaviourIndex].direction = "east"
+    elseif object.behaviours[behaviourIndex].direction == "down" then
+      object.behaviours[behaviourIndex].direction = "up"
+    elseif object.behaviours[behaviourIndex].direction == "up" then
+      object.behaviours[behaviourIndex].direction = "down"
+    end
   end
 end
 
@@ -143,5 +191,5 @@ function findBehaviourIndex(object, behaviourName)
 end
 
 function depthCalc(object)
-	object.depth = object.curX + object.curY + (object.curZ * 0.5) - object.height
+	object.depth = object.curX + object.curY + ((object.curZ - 1) * 0.5) - object.height
 end

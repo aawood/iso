@@ -76,4 +76,13 @@ function checkControls()
       end
     end
   end
+  if love.keyboard.isDown(backwardsKey) then
+    for objectIndex, object in ipairs(objects) do
+      if stateExists(object, "player") == true then
+        if onGround(object) == true then
+          addBehaviour(objectIndex, {bName = "moveForward", speed = -playerRunSpeed})
+        end
+      end
+    end
+  end
 end

@@ -12,7 +12,7 @@ function love.load()
 	cenY = screenY/2
 	xLimit = cenX/1.5
 	yLimit = cenY/1.5
-	xOffset = -150
+	xOffset = -130
 	yOffset = 136
 	love.window.setMode(screenX, screenY)
 	timeElapsed = 0
@@ -53,10 +53,11 @@ function genMap()
 --]]
 
 	addObject(8.1, 8.1, 2, 2, "object", {}, 0.8, 0.8, 0.8, {solid = true, facing = "east", gravity = 1, heavy = true, player = true})
-	addObject(8, 8, 8, 1, "object", {{bName = "sMove", direction = "south", speed = "3"}})
-	addObject(8, 8, 8, 1, "object", {})
-	buildFlat(0, 0, 0, 16, 8, 5, "frontWall")
+	addObject(8, 8, 8, 1, "object", {{bName = "travel", direction = "west", speed = 3}})
+	buildFlat(0, 0, 0, 16, 8, 5, "frontWall", {}, 1.5, 0, 1)
 	buildFlat(8, 0, 8, 0, 8, 7, "frontWall", {}, 1.5, 1, 0)
+	buildFlat(0, 0, 0, 16, 6.5, 5, "frontWall", {}, 1.5, 0, 1)
+	buildFlat(8, 0, 8, 0, 6.5, 7, "frontWall", {}, 1.5, 1, 0)
 	buildFlat(0, 17, 16, 17, 8, 7, "backWall")
 	buildFlat(17, 0, 17, 16, 8, 5, "backWall")
 	buildFlat(0, 0, 16, 16, 8, 3, "floor")
@@ -65,5 +66,5 @@ function genMap()
 	addObject(9, 9, 8, 1, "object", {}, 1, 1, 1)
 	addObject(8, 9, 8, 1, "object", {}, 1, 1, 1)
 	addObject(9, 8, 9, 1, "object", {}, 1, 1, 1)
-	addObject(9, 9, 7, 1, "object", {}, 1, 1, 1)
+	addObject(9, 9, 7, 1, "object", {{bName = "bounce", direction = "west", speed = 3}}, 1, 1, 1)
 end

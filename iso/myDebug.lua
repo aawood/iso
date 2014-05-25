@@ -14,7 +14,7 @@ function printDebug()
     if debug == true then
         debugLines = debugLines or {}
         for index, line in ipairs(debugLines) do
-            love.graphics.print(line[1].." - "..line[2], screenX - 300, index * 10)
+            love.graphics.print(line[1].." - "..line[2], screenX - 280, index * 10)
         end
     end
 end
