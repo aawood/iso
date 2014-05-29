@@ -149,7 +149,7 @@ function moveTo(object, objectIndex, addX, addY, addZ)
   end
 end
 
-function onGround(object)
+function onGround(object, objectIndex)
   local xMin = object.curX
 	local xMax = object.curX + object.xWidth
 	local yMin = object.curY

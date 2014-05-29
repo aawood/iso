@@ -30,4 +30,7 @@ end
 function collisionBetween(objectAIndex, objectBIndex)
   objectA = objects[objectAIndex]
   objectB = objects[objectBIndex]
+  if stateExists(objectA, "player") == true and objectB.oType == "floor" then
+    addDebug("Player standing on floor at " .. tostring(objectB.curX)..","..tostring(objectB.curY)..","..tostring(objectB.curZ))
+  end
 end

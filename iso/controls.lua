@@ -23,7 +23,7 @@ function checkControls()
 				zMin = zMin + 0.1
 				zMax = zMax + 0.1
 				local direction = object.states.facing
-				if onGround(object) == true then
+				if onGround(object, objectIndex) == true then
 					if behaviourExists(object, "jump") == false then
 						addBehaviour(objectIndex, {bName = "jump", ascentRate = playerJumpStrength, forwardRate = playerJumpSpeed, direction = direction})
 					end
@@ -70,7 +70,7 @@ function checkControls()
   if love.keyboard.isDown(forwardKey) then
     for objectIndex, object in ipairs(objects) do
       if stateExists(object, "player") == true then
-        if onGround(object) == true then
+        if onGround(object, objectIndex) == true then
           addBehaviour(objectIndex, {bName = "moveForward", speed = playerRunSpeed})
         end
       end
@@ -79,7 +79,7 @@ function checkControls()
   if love.keyboard.isDown(backwardsKey) then
     for objectIndex, object in ipairs(objects) do
       if stateExists(object, "player") == true then
-        if onGround(object) == true then
+        if onGround(object, objectIndex) == true then
           addBehaviour(objectIndex, {bName = "moveForward", speed = -playerRunSpeed})
         end
       end

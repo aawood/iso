@@ -11,8 +11,9 @@ end
 
 function stateExists(object, state)
 --  addDebug("checking "..tostring(object.oType).." state of "..tostring(state))
-	if object.states then
-		return object.states[state] ~= nil
+  theseStates = object.states or nil
+	if theseStates then
+		return theseStates[state] ~= nil
 	else
 		return false
 	end
