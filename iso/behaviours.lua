@@ -138,6 +138,11 @@ function moveTo(object, objectIndex, addX, addY, addZ)
 	local yMax = object.curY + object.yWidth + addY
 	local zMin = object.curZ - object.height + addZ
 	local zMax = object.curZ + addZ
+  if stateExists(object, "friction") == true then
+    addState(object, "supporting", true)
+    checkCollision(object.curX, object.curX + object.xWidth, object.curY, object.curY + object.yWidth, object.curZ - object.height - 0.2, object.curZ - 0.2, object, objectIndex, addX, addY, addZ)
+    removeState(object, "supporting")
+  end
   if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex, addX, addY, addZ) == false then
     object.curX = xMin
     object.curY = yMin

@@ -1,5 +1,5 @@
 debug = true
-testObject = 1
+testObject = 2
 
 function addDebug(string)
     debugLines = debugLines or {}

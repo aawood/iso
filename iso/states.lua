@@ -1,11 +1,11 @@
 function addState(object, state, value)
-  addDebug("Adding state "..tostring(state).." with value "..tostring(value))
+--  addDebug("Adding state "..tostring(state).." with value "..tostring(value))
   value = value or true
 	object.states[state] = value
 end
 
 function removeState(object, state)
-  addDebug("Removing state "..tostring(state))
+--  addDebug("Removing state "..tostring(state))
 	object.states[state] = nil
 end
 
