@@ -1,4 +1,4 @@
-function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex)
+function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex, xSpeed, ySpeed, zSpeed)
 	local collision = false
 
 	-- Need a tiny buffer to stop adjacent-but-not-overlapping objects from colliding.
@@ -8,6 +8,9 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex)
 	local yMax = yMax - 0.01
 	local zMin = zMin + 0.01
 	local zMax = zMax - 0.01
+  local xSpeed = xSpeed or 0
+  local ySpeed = ySpeed or 0
+  local zSpeed = zSpeed or 0
 
   if xMin < 0 or xMax > 16 or yMin < 0 or yMax > 16 or zMin < 0 or zMax > 16 then
     collision = true
@@ -18,7 +21,7 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex)
         -- If we're on overlapping x/y co-ordinates, check if increasing Z would put us into alt object. If so, it's a collision.
         if altObject.curX + altObject.xWidth >= xMin and altObject.curX <= xMax and altObject.curY + altObject.yWidth >= yMin and altObject.curY <= yMax and altObject.curZ >= zMin and altObject.curZ - altObject.height <= zMax then
           collision = true
-          collisionBetween(objectIndex, altObjectIndex)
+          collisionBetween(objectIndex, altObjectIndex, xSpeed, ySpeed, zSpeed)
         end
       end
     end
@@ -27,7 +30,7 @@ function checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex)
 	return collision
 end
 
-function collisionBetween(objectAIndex, objectBIndex)
+function collisionBetween(objectAIndex, objectBIndex, xSpeed, ySpeed, zSpeed)
   objectA = objects[objectAIndex]
   objectB = objects[objectBIndex]
   if stateExists(objectA, "player") == true and objectB.oType == "floor" then

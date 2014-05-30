@@ -138,7 +138,7 @@ function moveTo(object, objectIndex, addX, addY, addZ)
 	local yMax = object.curY + object.yWidth + addY
 	local zMin = object.curZ - object.height + addZ
 	local zMax = object.curZ + addZ
-  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex) == false then
+  if checkCollision(xMin, xMax, yMin, yMax, zMin, zMax, object, objectIndex, addX, addY, addZ) == false then
     object.curX = xMin
     object.curY = yMin
     object.curZ = zMax
