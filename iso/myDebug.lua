@@ -1,5 +1,5 @@
 debug = true
-testObject = 2
+testObject = 218
 
 function addDebug(string)
     debugLines = debugLines or {}
@@ -39,7 +39,8 @@ function debugObjectDetails(objectIndex, xPos)
 	end
 	yPos = yPos + 20
 
-	love.graphics.print("Known states:", xPos, yPos - 10)
+  love.graphics.print("Known states:", xPos, yPos - 10)
+--[[
 	love.graphics.print("     facing = " .. tostring(object.states.facing), xPos, yPos)
   yPos = yPos + 10
   if stateExists(object, "player") == true then
@@ -48,5 +49,13 @@ function debugObjectDetails(objectIndex, xPos)
   yPos = yPos + 10
   if stateExists(object, "gravity") == true then
     love.graphics.print("  gravity = " .. tostring(object.states.gravity), xPos, yPos)
+  end
+  if stateExists(object, "immobile") == true then
+    love.graphics.print(" immobile = " .. tostring(object.states.immobile), xPos, yPos)
+  end
+--]]
+  for stateName, stateValue in pairs(object.states) do
+    love.graphics.print(stateName .. " = " .. tostring(stateValue) , xPos, yPos)
+    yPos = yPos + 10
   end
 end
