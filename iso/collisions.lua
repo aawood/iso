@@ -32,15 +32,11 @@ end
 function collisionBetween(objectAIndex, objectBIndex, xSpeed, ySpeed, zSpeed)
   objectA = objects[objectAIndex]
   objectB = objects[objectBIndex]
---  addDebug("ObjectA ID - " .. tostring(objectAIndex) .. " | ObjectB ID - " .. tostring(objectBIndex))
+--[[  if stateExists(objectA, "player") == true and objectB.oType == "floor" then
+    addDebug("Player standing on floor at " .. tostring(objectB.curX)..","..tostring(objectB.curY)..","..tostring(objectB.curZ))
+  end --]]
 
--- If a moving object with Friction has on object on top, move object on top
   if stateExists(objectA, "supporting") == true then
-    moveTo(objectB, objectBIndex, xSpeed, ySpeed, zSpeed)
-  end
-
--- If an object moves into another that isn't immobile, move it.
-  if stateExists(objectB, "immobile") == false then
     moveTo(objectB, objectBIndex, xSpeed, ySpeed, zSpeed)
   end
 end
