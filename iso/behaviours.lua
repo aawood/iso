@@ -167,12 +167,12 @@ function onGround(object, objectIndex)
 end
 
 function addBehaviour(objectIndex, newBehaviour)
-  addDebug("Adding Behaviour "..newBehaviour.bName)
+--  addDebug("Adding Behaviour "..newBehaviour.bName)
 	table.insert(objects[objectIndex].behaviours, newBehaviour)
 end
 
 function removeBehaviour(object, behaviourIndex)
-  addDebug("Removing Behaviour ".. object.behaviours[behaviourIndex].bName)
+--  addDebug("Removing Behaviour ".. object.behaviours[behaviourIndex].bName)
 	table.remove(object.behaviours, behaviourIndex)
 end
 

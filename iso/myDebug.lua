@@ -36,17 +36,18 @@ function debugObjectDetails(objectIndex, xPos)
 	for behaviourIndex, behaviour in ipairs(object.behaviours) do
 		love.graphics.print(tostring(behaviour.bName), xPos, yPos)
 		yPos = yPos + 10
+    for variableIndex, variable in pairs(behaviour) do
+      if variable ~= "bName" then
+        love.graphics.print(tostring(variableIndex) .. " = " .. tostring(variable), xPos + 20, yPos)
+        yPos = yPos + 10
+      end
+    end
 	end
 	yPos = yPos + 20
 
 	love.graphics.print("Known states:", xPos, yPos - 10)
-	love.graphics.print("     facing = " .. tostring(object.states.facing), xPos, yPos)
-  yPos = yPos + 10
-  if stateExists(object, "player") == true then
-    love.graphics.print("  Is Player = " .. tostring(object.states.player), xPos, yPos)
-  end
-  yPos = yPos + 10
-  if stateExists(object, "gravity") == true then
-    love.graphics.print("  gravity = " .. tostring(object.states.gravity), xPos, yPos)
+  for stateIndex, state in pairs(object.states) do
+    love.graphics.print(tostring(stateIndex) .. " = " .. tostring(state), xPos, yPos)
+    yPos = yPos + 10
   end
 end
